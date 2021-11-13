@@ -1,61 +1,70 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import SafeScreen from "./SafeScreen";
-
-import { AppFormInput, AppForm, SubmitButton } from "../components/forms";
-
-const [username, setusername] = useState('');
-const [password, setpassword] = useState('');
+import { Image, StyleSheet, View ,Alert} from "react-native";
+import AppButton from "../components/AppButton";
+import AppText from "../components/AppText";
+import AppTextInput from "../components/AppTextInput";
+import colors from "../config/colors";
 
 
-function LoginScreen(props) {
+function LoginScreen({username,password}) {
+  const [inputPassword, setinputPassword] = React.useState('')
+  const [inputUsername, setinputUsername] = React.useState('')
+  const verifyLogin=()=>{
+    if(inputUsername==username&&inputPassword==password){
+      // return true;
+      console.log("good");
+    }else{
+      // return false;
+      Alert.alert("Alert", "User Does not Exist!", [
+        { text: "Okay!"}
+      ]);
+      console.log("bas");
+    }
+  }
+
+
   return (
-    <SafeScreen>
+    <View style={styles.Container}>
       <View style={styles.ImageContainer}>
         <Image
           style={styles.Image}
-          source={require("../assets/login.jpg")}
+          source={require("../assets/logo.png")}
         ></Image>
       </View>
-      <AppForm
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        <View style={styles.InputContainer}>
-          <AppFormInput
-            autoCapitalize="none"
-            icon="email"
-            name="email"
-            placeholder="Email"
-          />
-
-          <AppFormInput
-            secureTextEntry
-            name="password"
-            icon="lock"
-            placeholder="Password"
-          />
-        </View>
-        <View style={{ margin: 15, marginTop: 30 }}>
-          <SubmitButton title="login"></SubmitButton>
-        </View>
-      </AppForm>
-    </SafeScreen>
+      <View style={{alignItems:"center"}}>
+        <AppText style={{fontSize:30,fontWeight:"bold",color:colors.white}}>Login</AppText>
+      </View>
+      <View style={{ margin: 15, marginTop: 30 }}>
+      <AppTextInput setText={setinputUsername} />
+        <AppTextInput secureTextEntry setText={setinputPassword}/>
+      </View>
+      <View style={{ margin: 15, marginTop: 30 }}>
+        <AppButton onPress={verifyLogin} title="login"></AppButton>
+      </View>
+      <View style={{alignItems:"center"}}>
+        <AppText style={{color:colors.white}}>New User? Click Here</AppText>
+      </View>
+      
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  Container: {
+    backgroundColor: "#021030",
+    height: "100%",
+    flexDirection:"column",
+    justifyContent:"center"
+  },
   ImageContainer: {
     width: "100%",
-
     justifyContent: "center",
     alignItems: "center",
     height: 160,
   },
   Image: {
-    height: 80,
-    width: 80,
+    height: 200,
+    width: 200,
   },
   InputContainer: {
     justifyContent: "space-between",
