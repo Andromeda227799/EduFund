@@ -10,36 +10,29 @@ import {
     StackedBarChart
   } from "react-native-chart-kit";
 
-const AppChart = ({data}) => {
+const AppChart = ({data,labels}) => {
   // console.log(data);
     const{height,width}=useWindowDimensions();
     return (
         <View>
-  <Text>Bezier Line Chart</Text>
+  {/* <Text>Bezier Line Chart</Text> */}
   <LineChart
     data={{
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels:labels,
       datasets: [
         {
-          data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
-          ]
+          data:data
         }
       ]
     }}
     width={width-20} // from react-native
     height={220}
-    yAxisLabel="$"
-    yAxisSuffix="k"
+    yAxisLabel="₹"
+    yAxisSuffix=""
     yAxisInterval={1} // optional, defaults to 1
     chartConfig={{
-      backgroundColor: "#e26a00",
-      backgroundGradientFrom: "#fb8c00",
+      backgroundColor: "#0053e2",
+      backgroundGradientFrom: "#0053e2",
       backgroundGradientTo: "#ffa726",
       decimalPlaces: 2, // optional, defaults to 2dp
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

@@ -1,19 +1,28 @@
 
 import { useState } from 'react';
-export default useApi=(getData)=>{
+const useApi=(getData,endpoint,images)=>{
     const [data,setData]=useState([]);
+    // const [dataCopy,setDataCopy]=useState([]);
     const [error,setError]=useState(false);
     const [loading,setLoading]=useState(false);
 
     const request=async()=>{
+      endpoint.forEach(async (element,index) => {
         setLoading(true);
-        const response= await getData();
+        const response= await getData(element);
         setLoading(false);
 
         if(!response.ok) return setError(true);
     
         setError(false);
-        setData(response.data);
+        const finalResponse=response.data["meta"];
+        finalResponse.imageUri=images[index];
+        // console.log(index);
+        setData(prev=>[...prev,response.data["meta"]]);
+      });
+        
       }
-    return {request,data,error,loading}
+    // setDataCopy(data);
+    return {request,data,error,loading,setData}
 }
+export default useApi;

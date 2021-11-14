@@ -5,10 +5,11 @@ import AppText from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
 import colors from "../config/colors";
 
+import { useState } from "react";
 
 function LoginScreen({username,password}) {
-  const [inputPassword, setinputPassword] = React.useState('')
-  const [inputUsername, setinputUsername] = React.useState('')
+  const [inputPassword, setinputPassword] = useState('')
+  const [inputUsername, setinputUsername] = useState('')
   const verifyLogin=()=>{
     if(inputUsername==username&&inputPassword==password){
       // return true;

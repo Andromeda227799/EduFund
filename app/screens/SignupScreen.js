@@ -5,14 +5,15 @@ import AppText from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
 import colors from "../config/colors";
 
+import { useEffect, useState  } from "react";
 function LoginScreen({
   setpassword,
   setusername,
 }) {
 
-    const [isKeyboardVisible, setKeyboardVisible] = React.useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
        const keyboardDidShowListener = Keyboard.addListener(
          'keyboardDidShow',
          () => {
