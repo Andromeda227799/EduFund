@@ -20,7 +20,7 @@ import useCopy from "../hooks/useCopy";
 function ListingsScreen({ navigation }) {
   // const [list, setlist] = useState([]);
   // const getListingsApi=useApi(listingApi.getListings);
-  const endpoints = ["/100350", "/100121", "/120248", "/141305", "/145357"];
+  const endpoints = ["/100350", "/100121", "/120248", "/101361", "/139537"];
   const images = [
     require("../assets/icici.png"),
     require("../assets/hdfc.png"),
@@ -42,29 +42,20 @@ function ListingsScreen({ navigation }) {
     // console.log(data);
   }, []);
 
+  loadChart = false;
+  //   let chartYears=[],chartValues=[];
+  let orignalData=[];
+  if (data) {
+    loadChart = true;
+    orignalData=data;
+  }
   const handleReload = () => {
     loadListings();
-    setData(new Set(data));
+    setData([]);
     //   setSearch("");
   };
   //   const{copy,setcopy}=useCopy(data);
-  loadChart = false;
-  //   let chartYears=[],chartValues=[];
-  if (data) {
-    loadChart = true;
-    // const {values,years,meta}=usePreProcessing(data);
-    // chartYears=years;
-    // chartValues=values;
-  }
-  //   setlist(data);
-  //   ListofItems.push(data);
-
-  // if(search!=""){
-  //     // ()=>setFiltered(data);
-  //     setData(prev=>prev.filter(elem=>elem["fund_house"].startsWith(search)))
-
-  // }
-  //   console.log(data);
+  
   return (
     <SafeScreen>
       <View style={styles.container}>

@@ -6,7 +6,9 @@ import {
   } from "react-native-chart-kit";
 
 const AppBarChart = ({data,labels}) => {
-  // console.log(data);
+  data.reverse();
+  labels.reverse();
+    
     const{height,width}=useWindowDimensions();
     return (
         <View>

@@ -11,6 +11,12 @@ import {
   } from "react-native-chart-kit";
 
 const AppChart = ({data,labels}) => {
+  data.reverse();
+  labels.reverse();
+  if(data.length>8){
+    data.length=7;
+    labels.length=7;
+  }
   // console.log(data);
     const{height,width}=useWindowDimensions();
     return (

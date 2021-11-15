@@ -1,55 +1,52 @@
 import React from "react";
-import { Image, StyleSheet, View, Alert ,Keyboard} from "react-native";
+import { Image, StyleSheet, View, Alert, Keyboard } from "react-native";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
 import colors from "../config/colors";
 
-import { useEffect, useState  } from "react";
-function LoginScreen({
-  setpassword,
-  setusername,
-}) {
+import { useEffect, useState } from "react";
+function LoginScreen({navigation}) {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true); // or some other action
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false); // or some other action
+      }
+    );
 
-    useEffect(() => {
-       const keyboardDidShowListener = Keyboard.addListener(
-         'keyboardDidShow',
-         () => {
-           setKeyboardVisible(true); // or some other action
-         }
-       );
-       const keyboardDidHideListener = Keyboard.addListener(
-         'keyboardDidHide',
-         () => {
-           setKeyboardVisible(false); // or some other action
-         }
-       );
-   
-       return () => {
-         keyboardDidHideListener.remove();
-         keyboardDidShowListener.remove();
-       };
-     }, []);
-
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   const handleSignup = () => {
-    
-      // return false;
-      Alert.alert("Alert", "User Created", [{ text: "Okay!" }]);
-      console.log("bas");
-    
+    // return false;
+    Alert.alert("Alert", "User Created", [{ text: "Okay!",onPress:()=>{navigation.navigate("Login",{username:username,password:password})} }]);
+    console.log("bas");
   };
 
   return (
     <View style={styles.Container}>
-      {!isKeyboardVisible&&<View style={styles.ImageContainer}>
-        <Image
-          style={styles.Image}
-          source={require("../assets/logo.png")}
-        ></Image>
-      </View>}
+      {!isKeyboardVisible && (
+        <View style={styles.ImageContainer}>
+          <Image
+            style={styles.Image}
+            source={require("../assets/logo.png")}
+          ></Image>
+        </View>
+      )}
       <View style={{ alignItems: "center" }}>
         <AppText
           style={{ fontSize: 30, fontWeight: "bold", color: colors.white }}
@@ -59,9 +56,13 @@ function LoginScreen({
       </View>
       <View style={{ margin: 15, marginTop: 30 }}>
         <AppTextInput placeholder="Enter Username" setText={setusername} />
-        <AppTextInput placeholder="Enter Password" secureTextEntry setText={setpassword} />
-        <AppTextInput placeholder="Enter Password again" setText={()=>{}}/>
-        <AppTextInput placeholder="Enter Fund ID" setText={()=>{}}/>
+        <AppTextInput
+          placeholder="Enter Password"
+          secureTextEntry
+          setText={setpassword}
+        />
+        <AppTextInput placeholder="Enter Age" KeykeyboardType="numeric" setText={() => {}} />
+        <AppTextInput placeholder="Enter Fund ID" setText={() => {}} />
       </View>
       <View style={{ margin: 15, marginTop: 30 }}>
         <AppButton onPress={handleSignup} title="Sign Up"></AppButton>

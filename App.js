@@ -15,16 +15,19 @@ import { NavigationContainer } from '@react-navigation/native';
 const Stack=createStackNavigator();
 const StackNavigator=()=>(
   <Stack.Navigator>
+    <Stack.Screen name="Signup" component={SignupScreen} ></Stack.Screen>
+    <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+    
     <Stack.Screen name="Listings" component={ListingsScreen}></Stack.Screen>
     <Stack.Screen name="Details" component={DetailsScreen}></Stack.Screen>
+    
   </Stack.Navigator>
 );
 
 export default function App() {
 
 
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
+  
   return (
     <NavigationContainer>
       <StackNavigator></StackNavigator>
