@@ -36,18 +36,17 @@ function ListingsScreen({ navigation }) {
     request: loadListings,
   } = useApi(funds.getFund, endpoints, images);
   //   const {data:ListofItems,error,loading,request:loadListings}=useApi(listingApi.getListings);
-  let orignalData = [];
 
   useEffect(() => {
     loadListings();
     // console.log(data);
   }, []);
 
-  const handleReload=()=>{
-      loadListings();
-      setData(new Set(data));
+  const handleReload = () => {
+    loadListings();
+    setData(new Set(data));
     //   setSearch("");
-  }
+  };
   //   const{copy,setcopy}=useCopy(data);
   loadChart = false;
   //   let chartYears=[],chartValues=[];
@@ -59,18 +58,13 @@ function ListingsScreen({ navigation }) {
   }
   //   setlist(data);
   //   ListofItems.push(data);
-  if (data.length == 5) {
-    // const a=()=>{setFiltered(data)}
-    // a();
-    orignalData = data;
-    console.log(data);
-  }
+
   // if(search!=""){
   //     // ()=>setFiltered(data);
   //     setData(prev=>prev.filter(elem=>elem["fund_house"].startsWith(search)))
 
   // }
-  console.log(data.length);
+  //   console.log(data);
   return (
     <SafeScreen>
       <View style={styles.container}>
@@ -83,29 +77,34 @@ function ListingsScreen({ navigation }) {
         <AppLoader visible={loading} />
         <View style={styles.searchContainer}>
           {loadChart && (
-            <AppSearchBar width="90%" setData={setData} ></AppSearchBar>
+            <AppSearchBar width="90%" setData={setData}></AppSearchBar>
           )}
-          <MaterialCommunityIcons onPress={handleReload} name={"reload"} size={28} color="red" />
+          <MaterialCommunityIcons
+            onPress={handleReload}
+            name={"reload"}
+            size={28}
+            color="red"
+          />
         </View>
 
         {loadChart && (
           <FlatList
             data={data}
-            keyExtractor={(data) => data["fund_house"]}
+            keyExtractor={(data) => data["meta"]["fund_house"]}
             renderItem={({ item }) => (
-              //   <TouchableWithoutFeedback
-              //     onPress={() =>
-              //       navigation.navigate("ListingDetail", { Listing: item })
-              //     }
-              //   >
-              <View style={styles.ListContainer}>
-                <Card
-                  title={item["fund_house"]}
-                  subTitle={item["scheme_code"]}
-                  imageUrl={item.imageUri}
-                />
-              </View>
-              //   </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  navigation.navigate("Details", { data: item })
+                }
+              >
+                <View style={styles.ListContainer}>
+                  <Card
+                    title={item["meta"]["fund_house"]}
+                    subTitle={item["meta"]["scheme_code"]}
+                    imageUrl={item.imageUri}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
             )}
           ></FlatList>
         )}
@@ -120,10 +119,10 @@ const styles = StyleSheet.create({
     margin: 20,
     marginTop: 0,
   },
-  searchContainer:{
-      flexDirection:"row",
-      alignItems:"center",
-      justifyContent:"space-between"
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   ListContainer: {
     marginTop: 20,

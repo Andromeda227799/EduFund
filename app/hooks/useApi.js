@@ -15,10 +15,10 @@ const useApi=(getData,endpoint,images)=>{
         if(!response.ok) return setError(true);
     
         setError(false);
-        const finalResponse=response.data["meta"];
+        const finalResponse=response.data;
         finalResponse.imageUri=images[index];
         // console.log(index);
-        setData(prev=>[...prev,response.data["meta"]]);
+        setData(prev=>[...prev,finalResponse]);
       });
         
       }

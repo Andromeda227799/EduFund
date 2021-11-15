@@ -11,12 +11,13 @@ import ListingsScreen from './app/screens/ListingsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-const stack=createStackNavigator();
-const stackNavigator=()=>(
-  <stack.Navigator>
-    <stack.Screen name="Listings" component={ListingsScreen}></stack.Screen>
-    <stack.Screen name="Details" component={DetailsScreen}></stack.Screen>
-  </stack.Navigator>
+
+const Stack=createStackNavigator();
+const StackNavigator=()=>(
+  <Stack.Navigator>
+    <Stack.Screen name="Listings" component={ListingsScreen}></Stack.Screen>
+    <Stack.Screen name="Details" component={DetailsScreen}></Stack.Screen>
+  </Stack.Navigator>
 );
 
 export default function App() {
@@ -25,15 +26,16 @@ export default function App() {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   return (
-    // <NavigationContainer>
-    //   <stackNavigator></stackNavigator>
-    // </NavigationContainer>
-    <SafeScreen style={styles.container}>
-      {/* <LoginScreen username={username} password={password} /> */}
-      {/* <SignupScreen setpassword={setpassword} setusername={setusername}/> */}
-      {/* <DetailsScreen></DetailsScreen> */}
-      <ListingsScreen></ListingsScreen>
-    </SafeScreen>
+    <NavigationContainer>
+      <StackNavigator></StackNavigator>
+    </NavigationContainer>
+    // <IotTemp></IotTemp>
+    // <SafeScreen style={styles.container}>
+    //   {/* <LoginScreen username={username} password={password} /> */}
+    //   {/* <SignupScreen setpassword={setpassword} setusername={setusername}/> */}
+    //   {/* <DetailsScreen></DetailsScreen> */}
+    //   <ListingsScreen></ListingsScreen>
+    // </SafeScreen>
   );
 }
 

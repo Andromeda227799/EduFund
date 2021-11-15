@@ -14,13 +14,11 @@ import { useEffect } from "react";
 import usePreProcessing from "../hooks/usePreprocessing";
 import AppBarChart from "../components/AppBarChart";
 function DetailScreen({ route }) {
-  const { data, error, loading, request } = useApi(funds.getFund,"/100350");
+  // const data=route.params.item;
+  // const error=route.params.item;
+  const {data}=route.params;
   
-  useEffect(() => {
-    request();
-    // console.log(data);
-    
-  },[]);
+ 
   loadChart=false;
   let chartYears=[],chartValues=[];
   if(data&&data["data"]){
@@ -29,14 +27,9 @@ function DetailScreen({ route }) {
     chartYears=years;
     chartValues=values;
   }
+
   return (
     <SafeScreen>
-      {error && (
-        <View style={styles.error}>
-          <AppText>Unable to Fetch Data. Please Retry!</AppText>
-          <AppButton title="Retry" onPress={loadListings}></AppButton>
-        </View>
-      )}
       <View style={styles.detailsContainer}>
         {/* <AppText style={styles.title}>{route.params.Listing.title}</AppText> */}
         {loadChart&&<AppText style={styles.title}>{data["meta"]["fund_house"]}</AppText>}

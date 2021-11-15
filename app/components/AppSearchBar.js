@@ -21,7 +21,7 @@ function AppTextInput({setData, width = "100%", icon, setText, ...otherProps }) 
     >
       <MaterialCommunityIcons name={icon} size={24} color="black" />
       <TextInput
-        onChangeText={(text) =>setData(prev=>prev.filter(elem=>elem["fund_house"].startsWith(text)))}
+        onChangeText={(text) =>setData(prev=>prev.filter(elem=>elem["meta"]["fund_house"].startsWith(text)))}
         style={[
           {
             marginLeft: 15,
