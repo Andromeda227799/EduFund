@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": "Edufund Internship Application",
+    "githubUrl": "https://github.com/Andromeda227799/EduFund/tree/master"
   }
 }

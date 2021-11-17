@@ -17,45 +17,32 @@ import useApi from "../hooks/useApi";
 
 import AppSearchBar from "../components/AppSearchBar";
 import useCopy from "../hooks/useCopy";
+
 function ListingsScreen({ navigation }) {
-  // const [list, setlist] = useState([]);
-  // const getListingsApi=useApi(listingApi.getListings);
-  const endpoints = ["/100350", "/100121", "/120248", "/101361", "/139537"];
-  const images = [
-    require("../assets/icici.png"),
-    require("../assets/hdfc.png"),
-    require("../assets/lic.png"),
-    require("../assets/canara.png"),
-    require("../assets/mahindra.png"),
-  ];
+  const [dataShown, setdataShown] = useState([]);
+  const [loadChart, setLoadChart] = useState(false);
   const {
     data,
     error,
     loading,
     setData,
     request: loadListings,
-  } = useApi(funds.getFund, endpoints, images);
-  //   const {data:ListofItems,error,loading,request:loadListings}=useApi(listingApi.getListings);
+  } = useApi(funds.getFund, "");
 
   useEffect(() => {
     loadListings();
-    // console.log(data);
   }, []);
 
-  loadChart = false;
-  //   let chartYears=[],chartValues=[];
-  let orignalData=[];
-  if (data) {
-    loadChart = true;
-    orignalData=data;
-  }
+  useEffect(() => {
+      setdataShown(data[0]);
+      if (data[0])setLoadChart(true);
+  }, [data]);
+
   const handleReload = () => {
     loadListings();
     setData([]);
-    //   setSearch("");
   };
-  //   const{copy,setcopy}=useCopy(data);
-  
+
   return (
     <SafeScreen>
       <View style={styles.container}>
@@ -65,14 +52,14 @@ function ListingsScreen({ navigation }) {
             <AppButton title="Retry" onPress={loadListings}></AppButton>
           </View>
         )}
-        <AppLoader visible={loading} />
+        <AppLoader visible={!loadChart} />
         <View style={styles.searchContainer}>
           {loadChart && (
-            <AppSearchBar width="90%" setData={setData}></AppSearchBar>
+            <AppSearchBar data={data} width="90%" setdataShown={setdataShown}></AppSearchBar>
           )}
           <MaterialCommunityIcons
             onPress={handleReload}
-            name={"reload"}
+            name={"cancel"}
             size={28}
             color="red"
           />
@@ -80,19 +67,19 @@ function ListingsScreen({ navigation }) {
 
         {loadChart && (
           <FlatList
-            data={data}
-            keyExtractor={(data) => data["meta"]["fund_house"]}
+            data={dataShown}
+            keyExtractor={(data) => data["schemeCode"] + data["schemeName"]}
             renderItem={({ item }) => (
               <TouchableWithoutFeedback
-                onPress={() =>
-                  navigation.navigate("Details", { data: item })
-                }
+                onPress={() => {
+                  console.log("pressed-->", item);
+                  navigation.navigate("Details", { source: item });
+                }}
               >
                 <View style={styles.ListContainer}>
                   <Card
-                    title={item["meta"]["fund_house"]}
-                    subTitle={item["meta"]["scheme_code"]}
-                    imageUrl={item.imageUri}
+                    title={item["schemeName"]}
+                    subTitle={item["schemeCode"]}
                   />
                 </View>
               </TouchableWithoutFeedback>

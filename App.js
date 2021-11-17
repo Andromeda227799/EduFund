@@ -21,6 +21,8 @@ const StackNavigator=()=>(
     <Stack.Screen name="Listings" component={ListingsScreen}></Stack.Screen>
     <Stack.Screen name="Details" component={DetailsScreen}></Stack.Screen>
     
+    
+    
   </Stack.Navigator>
 );
 

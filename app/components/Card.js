@@ -7,7 +7,7 @@ import colors from "../config/colors";
 function Card({ title, subTitle, imageUrl }) {
   return (
     <View style={styles.card}>
-      <Image style={styles.image} source={imageUrl} />
+      {/* <Image style={styles.image} source={imageUrl} /> */}
       <View style={styles.detailsContainer}>
         <AppText numberOfLines={3} style={styles.title}>
           {title}
@@ -27,10 +27,6 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     padding: 20,
-  },
-  image: {
-    width: "100%",
-    height: 200,
   },
   subTitle: {
     color: colors.secondary,

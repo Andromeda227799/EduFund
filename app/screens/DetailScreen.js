@@ -14,16 +14,27 @@ import { useEffect } from "react";
 import usePreProcessing from "../hooks/usePreprocessing";
 import AppBarChart from "../components/AppBarChart";
 function DetailScreen({ route }) {
-  // const data=route.params.item;
-  // const error=route.params.item;
-  const {data}=route.params;
+  const {source}=route.params;
+  
+  const {
+    data,
+    error,
+    loading,
+    setData,
+    request: loadListings,
+  } = useApi(funds.getFund,"/"+source["schemeCode"]);
+  //  console.log(data[0]);
+  useEffect(() => {
+    loadListings();
+  }, []);
+
   
  
-  loadChart=false;
+  let loadChart=false;
   let chartYears=[],chartValues=[];
-  if(data&&data["data"]){
+  if(data&&data[0]&&data[0]["data"]){
     loadChart=true;
-    const {values,years}=usePreProcessing(data);
+    const {values,years}=usePreProcessing(data[0]);
     chartYears=years;
     chartValues=values;
   }
@@ -32,13 +43,13 @@ function DetailScreen({ route }) {
     <SafeScreen>
       <View style={styles.detailsContainer}>
         {/* <AppText style={styles.title}>{route.params.Listing.title}</AppText> */}
-        {loadChart&&<AppText style={styles.title}>{data["meta"]["fund_house"]}</AppText>}
+        {loadChart&&<AppText style={styles.title}>{data[0]["meta"]["fund_house"]}</AppText>}
         {/* <AppText style={styles.price}>₹ {route.params.Listing.price}</AppText> */}
-        {loadChart&&<AppText style={styles.price}>{data["meta"]["scheme_code"]}</AppText>}
+        {loadChart&&<AppText style={styles.price}>{data[0]["meta"]["scheme_code"]}</AppText>}
         {/* {loadChart&&<AppText style={styles.desc}>{data["meta"]["scheme_name"]}</AppText>} */}
       </View>
       <View style={styles.descContainer}>
-        {loadChart&&<AppText style={styles.desc}>{data["meta"]["scheme_name"]}</AppText>}
+        {loadChart&&<AppText style={styles.desc}>{data[0]["meta"]["scheme_name"]}</AppText>}
       </View>
       <View style={styles.chartContainer}>
         {loadChart&&<AppLineChart labels={chartYears}data={chartValues}></AppLineChart>}
@@ -53,7 +64,9 @@ function DetailScreen({ route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     padding: 20,
-    alignItems:"center"
+    paddingTop:0,
+    alignItems:"center",
+    
   },
   image: {
     width: "100%",
@@ -68,13 +81,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "500",
+    textAlign:"center",
   },
   chartContainer: {
     marginVertical: 20,
     padding: 10,
   },
   desc:{
-
+    textAlign:"center",
   },
   descContainer:{
     paddingTop:10,
